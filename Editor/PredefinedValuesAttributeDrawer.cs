@@ -120,13 +120,13 @@ namespace Abrusle.ExtraAtributes.Editor
                 int newIndex = EditorGUI.Popup(position, index, labels);
                 if (index != newIndex) // Pop up value changed
                 {
-                    if (newIndex == labels.Length - 1)
+                    if (AllowOtherValues && newIndex == labels.Length - 1)
                         PropertyValue = DefaultValue;
                     else OnPopUpValueChanged(newIndex);
                 }
             }
 
-            protected int SelectedIndex => Array.IndexOf(Data.Values.ToArray(), PropertyValue);
+            protected int SelectedIndex => Array.IndexOf(Data.Keys.ToArray(), PropertyValue);
 
 
             private void OnPopUpValueChanged(int newIndex)

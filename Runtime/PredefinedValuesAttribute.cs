@@ -25,14 +25,14 @@ public class PredefinedValuesAttribute : PropertyAttribute
     
     // Int
     public PredefinedValuesAttribute(params int[] values) : this(values, ConvertToStrings(values)) { }
-    private PredefinedValuesAttribute(int[] values, string[] labels)
+    public PredefinedValuesAttribute(int[] values, string[] labels)
     {
         storage = new Storage<int>(Combine(values, labels));
     }
     
     // Float
     public PredefinedValuesAttribute(params float[] values) : this(values, ConvertToStrings(values)) { }
-    private PredefinedValuesAttribute(float[] values, string[] labels)
+    public PredefinedValuesAttribute(float[] values, string[] labels)
     {
         storage = new Storage<float>(Combine(values, labels));
     }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc65a9b55614885b1464cc4a7a78f28, type: 3}
   m_Name: new Stats
   m_EditorClassIdentifier: 
-  factionName: ggerg
-  damageReduction: 8
+  factionName: I'm another value :p
+  damageReduction: 4
   friendList:
   - You!
   - Me!

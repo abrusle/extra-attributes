@@ -6,7 +6,7 @@ public class MyStats : ScriptableObject
         [PredefinedValues("abc", "def", "this is a sentence", "this is a paragraph\nthis is another paragraph", AllowOtherValues = true)]
         public string factionName;
 
-        [PredefinedValues(2, 4, 8, 16, 32, AllowOtherValues = true)]
+        [PredefinedValues(new []{2, 4, 8, 16, 32}, new [] {"Half", "Quarter", "Eighth", "Sixteenth", "Thirty-second"})]
         public int damageReduction;
         public string[] friendList;
         [ToggleLeft]
