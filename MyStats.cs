@@ -12,4 +12,7 @@ public class MyStats : ScriptableObject
         [ToggleLeft]
         public bool isHappy;
         public float[] things;
+
+        [FilePath]
+        public string myFile;
 }
