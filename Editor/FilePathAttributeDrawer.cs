@@ -1,8 +1,10 @@
-﻿using System;
+﻿#define EXTRA_ATTRIBUTES_DEBUG
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Utility = Abrusle.ExtraAtributes.Editor.ExtraAttributesUtility;
 
 namespace Abrusle.ExtraAtributes.Editor
 {
@@ -27,7 +29,7 @@ namespace Abrusle.ExtraAtributes.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            using (new ValidityScope(File.Exists(property.stringValue), true))
+            using (new ValidityScope(PathIsValid(property.stringValue), true))
             using (new EditorGUI.PropertyScope(position, label, property))
             {
                 position = EditorGUI.PrefixLabel(position, label);
@@ -46,25 +48,22 @@ namespace Abrusle.ExtraAtributes.Editor
                 };
                 if (GUI.Button(buttonRect, Icon, EditorStyles.miniButton))
                 {
+                    string modalPath = Utility.GetBasePathFromType(Attribute.FilePathType);
+                    Debug.Log(Attribute.FilePathType);
+                    Debug.Log(string.Join(", ", Attribute.Filters));
+                    Debug.Log(modalPath);
                     newPath = EditorUtility.OpenFilePanelWithFilters(
                         "Path to " + label.text, 
-                        Application.dataPath,
-                        Attribute.FileModalFilters);
+                        modalPath,
+                        Attribute.Filters);
 
-                    newPath = ExtraAttributesUtility.ConvertPath(newPath, Attribute.FilePathType);
+                    Debug.Log("Selected Asset: " + newPath);
+                    newPath = Utility.ConvertAbsolutePath(newPath, Attribute.FilePathType);
                 }
 
-                if (newPath != property.stringValue)
+                if (!string.IsNullOrWhiteSpace(newPath) && newPath != property.stringValue)
                     OnPathChanged(property, newPath);
             }
-
-            // if (!string.IsNullOrEmpty(property.stringValue) && _referencedObject == null)
-            //     _referencedObject = GetReferenceObject(property.stringValue);
-            //
-            // EditorGUI.indentLevel++;
-            // using (new EditorGUI.DisabledScope(true))
-            //     EditorGUILayout.ObjectField(_referencedObject, typeof(Object), false);
-            // EditorGUI.indentLevel--;
         }
 
         private void OnPathChanged(SerializedProperty property, string newPath)
@@ -73,21 +72,21 @@ namespace Abrusle.ExtraAtributes.Editor
             // _referencedObject = GetReferenceObject(newPath);
         }
 
-        private Object GetReferenceObject(string path)
+        private bool PathIsValid(string path)
         {
-            if (!Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out _)) return null;
             switch (Attribute.FilePathType)
             {
-                case FilePathType.Absolute:
-                    path = ExtraAttributesUtility.ConvertPath(path, FilePathType.AssetsFolder);
-                    goto case FilePathType.AssetsFolder;
                 case FilePathType.ResourcesFolder:
-                    return Resources.Load(path);
+                    path = Application.dataPath + "/Resources/" + path;
+                    break;
                 case FilePathType.AssetsFolder:
-                    return AssetDatabase.LoadMainAssetAtPath(path);
+                    path = Application.dataPath + "/" + path;
+                    break;
                 default:
-                    return null;
+                    throw new ArgumentOutOfRangeException();
             }
+
+            return File.Exists(path);
         }
     }
 }

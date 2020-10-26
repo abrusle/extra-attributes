@@ -13,6 +13,6 @@ public class MyStats : ScriptableObject
         public bool isHappy;
         public float[] things;
 
-        [FilePath]
+        [FilePath(FilePathType = FilePathType.AssetsFolder, Filters = new []{"JSON", "json"})]
         public string myFile;
 }

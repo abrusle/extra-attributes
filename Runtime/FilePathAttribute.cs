@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 // ReSharper disable CheckNamespace
 
@@ -15,17 +14,12 @@ public class FilePathAttribute : PropertyAttribute
 {
     public FilePathType FilePathType { get; set; } = FilePathType.ResourcesFolder;
 
-    public (string fileType, string extension)[] Filters { get; set; } = FilterPresets.AllFiles;
+    public string[] Filters { get; set; } = FilterPresets.AllFiles;
 
-    public string[] FileModalFilters => Filters
-        .SelectMany(filter => new[] {filter.fileType, filter.extension})
-        .ToArray();
-
-    
-    public struct FilterPresets
+    private struct FilterPresets
     {
-        public static readonly (string fileType, string extension)[] AllFiles = {("All Files", "*")};
-        public static readonly (string fileType, string extension)[] Assets = {("Assets", "asset")};
-        public static readonly (string fileType, string extension)[] Images = {("Images", "jpg,png,jpeg")};
+        public static readonly string[] AllFiles = {"All Files", "*"};
+        public static readonly string[] Assets = {"Assets", "asset"};
+        public static readonly string[] Images = {"Images", "jpg,png,jpeg"};
     }
 }

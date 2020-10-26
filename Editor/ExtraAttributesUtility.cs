@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace Abrusle.ExtraAtributes.Editor
@@ -13,24 +12,40 @@ namespace Abrusle.ExtraAtributes.Editor
             {FilePathType.ResourcesFolder, Application.dataPath + "/Resources/"},
         };
         
-        public static string ConvertPath(string path, FilePathType desiredFilePathType)
+        public static string ConvertAbsolutePath(string path, FilePathType desiredFilePathType)
         {
-            var uri = new Uri(path);
+            if (!Uri.TryCreate(path, UriKind.Absolute, out var uri))
+            {
+                if (string.IsNullOrWhiteSpace(path)) return string.Empty;
+                else throw new ArgumentException($"File path not supported ({path})");
+            }
 
             if (!uri.IsFile || !uri.IsAbsoluteUri)
                 throw new ArgumentException($"File path not supported ({path})");
             if (desiredFilePathType == FilePathType.Absolute) return path;
 
-            return MakeRelative(path, ReferenceDirectoryPaths[desiredFilePathType]);
+            string basePath = GetBasePathFromType(desiredFilePathType);
+            var baseUri = new Uri(basePath);
+            if (!baseUri.IsBaseOf(uri))
+            {
+                Debug.LogError($"File outside of scope. Path={path}, Scope={desiredFilePathType}");
+                return path;
+            }
+
+            return path.Substring(basePath.Length);
         }
 
-        public static string MakeRelative(string filePath, string referencePath)
+        internal static string GetBasePathFromType(FilePathType pathType)
         {
-            var fileUri = new Uri(filePath);
-            var referenceUri = new Uri(referencePath);
-            return Uri
-                .UnescapeDataString(referenceUri.MakeRelativeUri(fileUri).ToString())
-                .Replace('/', Path.DirectorySeparatorChar);
+            switch (pathType)
+            {
+                case FilePathType.ResourcesFolder:
+                    return Application.dataPath + "/Resources/";
+                case FilePathType.AssetsFolder:
+                    return Application.dataPath;
+                default:
+                    return string.Empty;
+            }
         }
     }
 }
