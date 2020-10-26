@@ -6,10 +6,11 @@ namespace Abrusle.ExtraAtributes.Editor
 {
     public static class ExtraAttributesUtility
     {
-        public static readonly IReadOnlyDictionary<FilePathType, string> ReferenceDirectoryPaths = new Dictionary<FilePathType, string>
+        internal static readonly IReadOnlyDictionary<FilePathType, string> BasePathList = new Dictionary<FilePathType, string>
         {
-            {FilePathType.AssetsFolder, Application.dataPath},
             {FilePathType.ResourcesFolder, Application.dataPath + "/Resources/"},
+            {FilePathType.AssetsFolder   , Application.dataPath + '/'},
+            {FilePathType.Absolute       , string.Empty},
         };
         
         public static string ConvertAbsolutePath(string path, FilePathType desiredFilePathType)
@@ -24,7 +25,7 @@ namespace Abrusle.ExtraAtributes.Editor
                 throw new ArgumentException($"File path not supported ({path})");
             if (desiredFilePathType == FilePathType.Absolute) return path;
 
-            string basePath = GetBasePathFromType(desiredFilePathType);
+            string basePath = BasePathList[desiredFilePathType];
             var baseUri = new Uri(basePath);
             if (!baseUri.IsBaseOf(uri))
             {
@@ -33,19 +34,6 @@ namespace Abrusle.ExtraAtributes.Editor
             }
 
             return path.Substring(basePath.Length);
-        }
-
-        internal static string GetBasePathFromType(FilePathType pathType)
-        {
-            switch (pathType)
-            {
-                case FilePathType.ResourcesFolder:
-                    return Application.dataPath + "/Resources/";
-                case FilePathType.AssetsFolder:
-                    return Application.dataPath;
-                default:
-                    return string.Empty;
-            }
         }
     }
 }

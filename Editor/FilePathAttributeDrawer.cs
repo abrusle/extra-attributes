@@ -29,26 +29,33 @@ namespace Abrusle.ExtraAtributes.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if (property.propertyType != SerializedPropertyType.String)
+            {
+                using (new ValidityScope(false))
+                    EditorGUI.LabelField(position, label, new GUIContent($"Invalid use of {nameof(FilePathAttribute)}"));
+                return;
+            }
+            
             using (new ValidityScope(PathIsValid(property.stringValue), true))
             using (new EditorGUI.PropertyScope(position, label, property))
             {
-                position = EditorGUI.PrefixLabel(position, label);
+                var fieldPosition = EditorGUI.PrefixLabel(position, label);
                 
-                var fieldRect = new Rect(position)
+                var fieldRect = new Rect(fieldPosition)
                 {
-                    width = position.width - (ButtonWidth + Spacing)
+                    width = fieldPosition.width - (ButtonWidth + Spacing)
                 };
-                
-                string newPath = EditorGUI.TextField(fieldRect, property.stringValue);
-                
-                var buttonRect = new Rect(position)
+
+                var buttonRect = new Rect(fieldPosition)
                 {
                     width = ButtonWidth,
                     x = fieldRect.x + fieldRect.width + Spacing
                 };
+                DrawPrefix(position, fieldPosition);
+                string newPath = EditorGUI.TextField(fieldRect, property.stringValue);
                 if (GUI.Button(buttonRect, Icon, EditorStyles.miniButton))
                 {
-                    string modalPath = Utility.GetBasePathFromType(Attribute.FilePathType);
+                    string modalPath = Utility.BasePathList[Attribute.FilePathType];
                     Debug.Log(Attribute.FilePathType);
                     Debug.Log(string.Join(", ", Attribute.Filters));
                     Debug.Log(modalPath);
@@ -69,7 +76,6 @@ namespace Abrusle.ExtraAtributes.Editor
         private void OnPathChanged(SerializedProperty property, string newPath)
         {
             property.stringValue = newPath;
-            // _referencedObject = GetReferenceObject(newPath);
         }
 
         private bool PathIsValid(string path)
@@ -82,11 +88,37 @@ namespace Abrusle.ExtraAtributes.Editor
                 case FilePathType.AssetsFolder:
                     path = Application.dataPath + "/" + path;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
 
             return File.Exists(path);
+        }
+
+        private void DrawPrefix(Rect totalPosition, Rect fieldPosition)
+        {
+            var prefixRect = new Rect(totalPosition)
+            {
+                width = totalPosition.width - fieldPosition.width - Spacing
+            };
+            var content = new GUIContent();
+            switch (Attribute.FilePathType)
+            {
+                case FilePathType.ResourcesFolder:
+                    content.text = "Resources/";
+                    break;
+                case FilePathType.AssetsFolder:
+                    content.text = "Assets/";
+                    break;
+                default:
+                    return;
+            }
+            
+            var style = new GUIStyle(EditorStyles.label)
+            {
+                normal = new GUIStyleState {textColor = new Color(1f, 1f, 1f, 0.35f)},
+                alignment = TextAnchor.MiddleRight
+            };
+            
+            EditorGUI.LabelField(prefixRect, content, style);
         }
     }
 }

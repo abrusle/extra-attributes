@@ -14,12 +14,15 @@ public class FilePathAttribute : PropertyAttribute
 {
     public FilePathType FilePathType { get; set; } = FilePathType.ResourcesFolder;
 
-    public string[] Filters { get; set; } = FilterPresets.AllFiles;
-
-    private struct FilterPresets
+    public string[] Filters { get; set; } =
     {
-        public static readonly string[] AllFiles = {"All Files", "*"};
-        public static readonly string[] Assets = {"Assets", "asset"};
-        public static readonly string[] Images = {"Images", "jpg,png,jpeg"};
-    }
+        "All Files",
+#if UNITY_EDITOR_OSX
+        ""
+#else
+        "*"
+#endif
+    };
+    
+    // TODO : Allow specifying base directory path to make the value relative to.
 }
