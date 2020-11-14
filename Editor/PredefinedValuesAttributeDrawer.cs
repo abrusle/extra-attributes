@@ -7,15 +7,19 @@ using UnityEngine;
 namespace Abrusle.ExtraAtributes.Editor
 {
     [CustomPropertyDrawer(typeof(PredefinedValuesAttribute))]
-    public class PredefinedValuesAttributeDrawer : PropertyDrawer
+    public class PredefinedValuesAttributeDrawer : PropertyDrawerBase<PredefinedValuesAttribute>
     {
         private const string OtherValueKey = "Other...";
         private const float DualFieldPopUpWidth = 80;
-
-        private PredefinedValuesAttribute Attribute => _attr ?? (_attr = (PredefinedValuesAttribute) attribute);
-        private PredefinedValuesAttribute _attr;
-
+        
         private IDrawer _drawer;
+
+        protected override SerializedPropertyType[] SupportedTypes => new[]
+        {
+            SerializedPropertyType.Float,
+            SerializedPropertyType.Integer,
+            SerializedPropertyType.String
+        };
 
         /// <inheritdoc />
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -24,7 +28,7 @@ namespace Abrusle.ExtraAtributes.Editor
         }
 
         /// <inheritdoc />
-        public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label)
+        public override void DrawGUI(Rect position, SerializedProperty prop, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, prop))
             {

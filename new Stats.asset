@@ -22,6 +22,6 @@ MonoBehaviour:
   - 75258
   - 98
   - 2223
-  myResourceFile: Hexagon.png
-  myAssetFile: Scenes/OtherScene.unity
-  myAbsoluteFile: /Users/abrusle/Desktop/symbols.txt
+  myResourceFile: New Tile.asset
+  myAssetFile: Scenes/LOD_Test.unity
+  myAbsoluteFile: "C:/Users/Alexis Brusl\xE9/Documents/htdocs.rar"

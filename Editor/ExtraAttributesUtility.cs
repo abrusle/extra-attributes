@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 
 namespace Abrusle.ExtraAtributes.Editor
@@ -34,6 +36,16 @@ namespace Abrusle.ExtraAtributes.Editor
             }
 
             return path.Substring(basePath.Length);
+        }
+
+        internal static void OpenFileDialogue(string title, string path, string[] filters, IFileDialogueRecipient recipient)
+        {
+            Async();
+            async void Async()
+            {
+                await Task.Yield();
+                recipient.FileDialogueResult = EditorUtility.OpenFilePanelWithFilters(title, path, filters);
+            }
         }
     }
 }

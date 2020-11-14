@@ -9,8 +9,10 @@ using Utility = Abrusle.ExtraAtributes.Editor.ExtraAttributesUtility;
 namespace Abrusle.ExtraAtributes.Editor
 {
     [CustomPropertyDrawer(typeof(FilePathAttribute))]
-    public class FilePathAttributeDrawer : PropertyDrawerBase<FilePathAttribute>
+    public class FilePathAttributeDrawer : PropertyDrawerBase<FilePathAttribute>, IFileDialogueRecipient
     {
+        public string FileDialogueResult { get; set; }
+        
         private static GUIContent Icon
         {
             get
@@ -25,17 +27,10 @@ namespace Abrusle.ExtraAtributes.Editor
         private const float ButtonWidth = 50;
         private const float Spacing = 4f;
 
-        private Object _referencedObject = null;
+        protected override SerializedPropertyType[] SupportedTypes => new[] {SerializedPropertyType.String};
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        public override void DrawGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (property.propertyType != SerializedPropertyType.String)
-            {
-                using (new ValidityScope(false))
-                    EditorGUI.LabelField(position, label, new GUIContent($"Invalid use of {nameof(FilePathAttribute)}"));
-                return;
-            }
-            
             using (new ValidityScope(PathIsValid(property.stringValue), true))
             using (new EditorGUI.PropertyScope(position, label, property))
             {
@@ -59,13 +54,14 @@ namespace Abrusle.ExtraAtributes.Editor
                     Debug.Log(Attribute.FilePathType);
                     Debug.Log(string.Join(", ", Attribute.Filters));
                     Debug.Log(modalPath);
-                    newPath = EditorUtility.OpenFilePanelWithFilters(
-                        "Path to " + label.text, 
-                        modalPath,
-                        Attribute.Filters);
+                    Utility.OpenFileDialogue("Path to " + label.text, modalPath, Attribute.Filters, this);
+                    return;
+                }
 
-                    Debug.Log("Selected Asset: " + newPath);
-                    newPath = Utility.ConvertAbsolutePath(newPath, Attribute.FilePathType);
+                if (FileDialogueResult != null)
+                {
+                    newPath = Utility.ConvertAbsolutePath(FileDialogueResult, Attribute.FilePathType);;
+                    FileDialogueResult = null;
                 }
 
                 if (!string.IsNullOrWhiteSpace(newPath) && newPath != property.stringValue)
