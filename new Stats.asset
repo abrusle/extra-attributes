@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc65a9b55614885b1464cc4a7a78f28, type: 3}
   m_Name: new Stats
   m_EditorClassIdentifier: 
-  factionName: def
+  factionName: jh
   damageReduction: 4
   friendList:
-  - You!
+  - is
   - Me!
   isHappy: 1
   things:
@@ -23,5 +23,6 @@ MonoBehaviour:
   - 98
   - 2223
   myResourceFile: New Tile.asset
-  myAssetFile: Scenes/LOD_Test.unity
-  myAbsoluteFile: "C:/Users/Alexis Brusl\xE9/Documents/htdocs.rar"
+  myAssetFile: ForwardRenderer.asset
+  myAbsoluteFile: C:/Downloads/Updater_SA_Upgrade/SUPPORTASSISTINSTALLER.exe
+  mySettings: {fileID: 0}

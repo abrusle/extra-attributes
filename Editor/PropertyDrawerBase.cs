@@ -24,12 +24,23 @@ namespace Abrusle.ExtraAtributes.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (SupportedTypes == null || Array.IndexOf(SupportedTypes, property.propertyType) != -1)
+            if (IsSupportedProperty(property, out string customErrorMessage))
+            {
                 DrawGUI(position, property, label);
-            else DrawInvalidAttributeUsage(position, label);
+            }
+            else
+            {
+                DrawInvalidAttributeUsage(position, label, customErrorMessage);
+            }
         }
-        
-        public abstract void DrawGUI(Rect position, SerializedProperty property, GUIContent label);
+
+        protected abstract void DrawGUI(Rect position, SerializedProperty property, GUIContent label);
+
+        protected virtual bool IsSupportedProperty(SerializedProperty property, out string customErrorMessage)
+        {
+            customErrorMessage = null;
+            return SupportedTypes == null || Array.IndexOf(SupportedTypes, property.propertyType) != -1;
+        }
 
         protected class ColorScope : GUI.Scope
         { 
@@ -65,9 +76,11 @@ namespace Abrusle.ExtraAtributes.Editor
             }
         }
 
-        protected void DrawInvalidAttributeUsage(Rect position, GUIContent label)
+        protected void DrawInvalidAttributeUsage(Rect position, GUIContent label, string customErrorMessage = null)
         {
             var message = new GUIContent($"Invalid use of {typeof(T)}");
+            if (customErrorMessage != null)
+                message.text = customErrorMessage;
             if (SupportedTypes != null && SupportedTypes.Length > 0)
                 message.tooltip = "Valid on:\t\n- " + string.Join("\n- ", SupportedTypes);
             

@@ -27,8 +27,17 @@ namespace Abrusle.ExtraAtributes.Editor
             return EditorGUIUtility.singleLineHeight;
         }
 
+        protected override bool IsSupportedProperty(SerializedProperty property, out string customErrorMessage)
+        {
+            bool supportedType = base.IsSupportedProperty(property, out string customErrorMessageBase);
+            bool isNotArrayMember = property.depth == 0;
+
+            customErrorMessage = isNotArrayMember ? "Arrays are not supported" : customErrorMessageBase;
+            return supportedType && isNotArrayMember;
+        }
+
         /// <inheritdoc />
-        public override void DrawGUI(Rect position, SerializedProperty prop, GUIContent label)
+        protected override void DrawGUI(Rect position, SerializedProperty prop, GUIContent label)
         {
             using (new EditorGUI.PropertyScope(position, label, prop))
             {

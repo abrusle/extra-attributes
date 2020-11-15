@@ -29,7 +29,7 @@ namespace Abrusle.ExtraAtributes.Editor
 
         protected override SerializedPropertyType[] SupportedTypes => new[] {SerializedPropertyType.String};
 
-        public override void DrawGUI(Rect position, SerializedProperty property, GUIContent label)
+        protected override void DrawGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             using (new ValidityScope(PathIsValid(property.stringValue), true))
             using (new EditorGUI.PropertyScope(position, label, property))
