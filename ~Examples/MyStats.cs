@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Stats", menuName = "Data/! My Stats !", order = 0)]
 public class MyStats : ScriptableObject, ISomething
 {
+    [Header("Predefined Values")]
     [PredefinedValues("abc", "def", "this is a sentence", "this is a paragraph\nthis is another paragraph", AllowOtherValues = true)]
     public string factionName;
 
@@ -11,11 +12,13 @@ public class MyStats : ScriptableObject, ISomething
     public int damageReduction;
     [PredefinedValues("this", "is", "an", "array")]
     public string[] friendList;
-    [ToggleLeft]
-    public bool isHappy;
+    [PredefinedValues(new float[]{3, 6, 9, 12})]
     public float[] things;
 
-    [Space]
+    [ToggleLeft, Header("Toggle Left")]
+    public bool isHappy;
+
+    [Space, Header("File Paths")]
     [FilePath(FilePathType = FilePathType.ResourcesFolder)]
     public string myResourceFile;
     
@@ -25,9 +28,13 @@ public class MyStats : ScriptableObject, ISomething
     [FilePath(FilePathType = FilePathType.Absolute)]
     public string myAbsoluteFile;
 
-    [Space]
-    [MustImplement(typeof(ISomething), typeof(ILogHandler))]
+    [Space, Header("Must Implement")]
+    [MustImplement(typeof(ISomething))]
     public Object mySettings;
+
+    [Space, Tag(ShowCopyButton = true), Header("Tags")]
+    public string myTagName;
+    [Tag] public string mySimpleTagName;
 }
 
 public interface ISomething

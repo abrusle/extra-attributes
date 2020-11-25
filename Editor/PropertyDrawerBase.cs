@@ -8,12 +8,21 @@ namespace Abrusle.ExtraAtributes.Editor
     {
         protected static class IconIDs
         {
-            public static readonly Theme darkTheme = new Theme {folderIcon = "d_FolderOpened Icon"};
-            public static readonly Theme lightTheme = new Theme {folderIcon = "FolderOpened Icon"};
+            public static readonly Theme darkTheme = new Theme
+            {
+                folderIcon = "d_FolderOpened Icon",
+                clipboardIcon = "Clipboard"
+            };
+            public static readonly Theme lightTheme = new Theme
+            {
+                folderIcon = "FolderOpened Icon",
+                clipboardIcon = "Clipboard"
+            };
             
             public class Theme
             {
                 public string folderIcon;
+                public string clipboardIcon;
             }
         }
         
