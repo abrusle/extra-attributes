@@ -12,15 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc65a9b55614885b1464cc4a7a78f28, type: 3}
   m_Name: new Stats
   m_EditorClassIdentifier: 
-  factionName: 
+  factionName: Clowns
   damageReduction: 2
-  friendList: []
-  things: []
-  isHappy: 0
-  myResourceFile: 
-  myAssetFile: 
-  myAbsoluteFile: 
+  friendList:
+  - 
+  - 
+  - 
+  things:
+  - 0
+  - 0
+  isHappy: 1
+  myResourceFile: New Tile.asset.meta
+  myAssetFile: ExampleAssets.meta
+  myAbsoluteFile: C:/ProgramData/Unity/index-local.xml
   mySettings: {fileID: 0}
   myTagName: Untagged
   mySimpleTagName: Respawn
-  myLayer: 1
+  myLayer: 8
