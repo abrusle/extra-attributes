@@ -31,7 +31,7 @@ public class MyStats : ScriptableObject, ISomething
 
     [Space, Header("Must Implement")]
     [MustImplement(typeof(ISomething))]
-    public ScriptableObject mySettings;
+    public ScriptableObject mySomething;
 
     [Space, Tag(ShowCopyButton = true), Header("Tags")]
     public string myTagName;
