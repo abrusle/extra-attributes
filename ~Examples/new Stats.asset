@@ -12,19 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc65a9b55614885b1464cc4a7a78f28, type: 3}
   m_Name: new Stats
   m_EditorClassIdentifier: 
-  factionName: jh
-  damageReduction: 4
-  friendList:
-  - is
-  - Me!
-  things:
-  - 75258
-  - 98
-  - 2223
-  isHappy: 1
-  myResourceFile: New Tile.asset
-  myAssetFile: ForwardRenderer.asset
-  myAbsoluteFile: C:/Downloads/Updater_SA_Upgrade/SUPPORTASSISTINSTALLER.exe
+  factionName: 
+  damageReduction: 2
+  friendList: []
+  things: []
+  isHappy: 0
+  myResourceFile: 
+  myAssetFile: 
+  myAbsoluteFile: 
   mySettings: {fileID: 0}
   myTagName: Untagged
   mySimpleTagName: Respawn
+  myLayer: 1

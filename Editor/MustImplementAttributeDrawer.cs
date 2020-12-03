@@ -16,7 +16,7 @@ namespace Abrusle.ExtraAtributes.Editor
             label.tooltip = Tooltip;
             using (new EditorGUI.PropertyScope(position, label, property))
             {
-                var fieldObject = EditorGUI.ObjectField(position, label, property.objectReferenceValue, typeof(Object), Attribute.AllowSceneObjects);
+                var fieldObject = EditorGUI.ObjectField(position, label, property.objectReferenceValue, property.GetPropertyType() ?? typeof(Object), Attribute.AllowSceneObjects);
                 if (fieldObject != property.objectReferenceValue)
                     OnValueChange(fieldObject, property);
             }

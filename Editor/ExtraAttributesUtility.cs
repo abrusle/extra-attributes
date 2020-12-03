@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -45,6 +46,22 @@ namespace Abrusle.ExtraAtributes.Editor
             {
                 await Task.Yield();
                 recipient.FileDialogueResult = EditorUtility.OpenFilePanelWithFilters(title, path, filters);
+            }
+        }
+
+        public static Type GetPropertyType(this SerializedProperty prop)
+        {
+            try
+            {
+                return prop.serializedObject.targetObject.GetType()
+                    .GetField(prop.name, 
+                        BindingFlags.Public |
+                        BindingFlags.NonPublic |
+                        BindingFlags.Instance)?.FieldType;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
             }
         }
     }

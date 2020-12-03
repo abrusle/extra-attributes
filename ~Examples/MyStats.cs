@@ -30,11 +30,14 @@ public class MyStats : ScriptableObject, ISomething
 
     [Space, Header("Must Implement")]
     [MustImplement(typeof(ISomething))]
-    public Object mySettings;
+    public ScriptableObject mySettings;
 
     [Space, Tag(ShowCopyButton = true), Header("Tags")]
     public string myTagName;
     [Tag] public string mySimpleTagName;
+
+    [Header("Layers"), SingleLayer]
+    public int myLayer;
 }
 
 public interface ISomething

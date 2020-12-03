@@ -51,9 +51,9 @@ namespace Abrusle.ExtraAtributes.Editor
                 if (GUI.Button(buttonRect, Icon, EditorStyles.miniButton))
                 {
                     string modalPath = Utility.BasePathList[Attribute.FilePathType];
-                    Debug.Log(Attribute.FilePathType);
-                    Debug.Log(string.Join(", ", Attribute.Filters));
-                    Debug.Log(modalPath);
+                    // Debug.Log(Attribute.FilePathType);
+                    // Debug.Log(string.Join(", ", Attribute.Filters));
+                    // Debug.Log(modalPath);
                     Utility.OpenFileDialogue("Path to " + label.text, modalPath, Attribute.Filters, this);
                     return;
                 }
