@@ -1,15 +1,15 @@
 ﻿{
-  "name": "com.abrusle.extra-attributes",
-  "displayName":"Extra Attributes",
-  "description":"Additional attributes for serialized fields.",
-  "version": "0.1.1",
-  "unity":"2019.3",
-  "author": {
-    "name": "Abrusle",
-    "email": "public.abrusle@gmail.com",
-    "url": "https://github.com/abrusle"
-  },
-  "dependencies": {
-    "com.unity.ugui": "1.0.0"
-  }
+    "name": "com.abrusle.extra-attributes",
+    "displayName": "Extra Attributes",
+    "description": "Additional attributes for serialized fields.",
+    "version": "0.1.2",
+    "unity": "2019.3",
+    "author": {
+        "name": "Abrusle",
+        "email": "public.abrusle@gmail.com",
+        "url": "https://github.com/abrusle"
+    },
+    "dependencies": {
+        "com.unity.ugui": "1.0.0"
+    }
 }
