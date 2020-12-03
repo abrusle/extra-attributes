@@ -1,7 +1,8 @@
+using System;
 using Runtime;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Stats", menuName = "Data/! My Stats !", order = 0)]
+// [CreateAssetMenu(fileName = "new Stats", menuName = "Data/! My Stats !", order = 0)]
 public class MyStats : ScriptableObject, ISomething
 {
     [Header("Predefined Values")]
@@ -38,6 +39,19 @@ public class MyStats : ScriptableObject, ISomething
 
     [Header("Layers"), SingleLayer]
     public int myLayer;
+
+    [Header("Read Only"), ReadOnly]
+    public string taunt = "you can't change this message :p";
+    [ReadOnly]
+    public MyData data;
+    
+    [Serializable]
+    public struct MyData
+    {
+        public int id;
+        public string subject;
+        public string comment;
+    }
 }
 
 public interface ISomething
