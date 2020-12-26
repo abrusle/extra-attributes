@@ -6,8 +6,4 @@ using UnityEngine;
 public class ScenePointAttribute : SceneAttributeBase
 {
     public float Size { get; set; } = 1;
-
-    public ScenePointAttribute(Space space = Space.World) : base(space)
-    {
-    }
 }

@@ -15,13 +15,13 @@ namespace Abrusle.ExtraAtributes.Editor
             var dir = PropertyValue.normalized;
             var monoTransform = mono.transform;
             
-            if (attribute.space == Space.Self)
+            if (attribute.Space == Space.Self)
                 dir = monoTransform.TransformDirection(dir);
             
             var position = monoTransform.position;
             
             Handles.color = attribute.Color;
-            Handles.DrawLine(position, position + dir * attribute.length);
+            Handles.DrawLine(position, position + dir * attribute.Length);
         }
         
         private Vector3 PropertyValue

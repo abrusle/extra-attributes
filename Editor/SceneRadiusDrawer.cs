@@ -15,7 +15,7 @@ namespace Abrusle.ExtraAtributes.Editor
             float radius = PropertyValue;
             var monoTransform = mono.transform;
 
-            bool relativeSpace = attribute.space == Space.Self;
+            bool relativeSpace = attribute.Space == Space.Self;
             if (relativeSpace) radius *= monoTransform.localScale.magnitude;
 
             var pos = monoTransform.position;

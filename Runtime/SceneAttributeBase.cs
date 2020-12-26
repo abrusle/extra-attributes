@@ -5,13 +5,9 @@ namespace Runtime
 {
     public abstract class SceneAttributeBase : Attribute
     {
-        public readonly Space space;
-        
-        public Color Color { get; set; } = Color.white;
+        public Space Space { get; set; } = Space.World;
+        public Color Color => ColorUtility.TryParseHtmlString(ColorCode, out var c) ? c : Color.white;
 
-        protected SceneAttributeBase(Space space = Space.World)
-        {
-            this.space = space;
-        }
+        public string ColorCode { get; set; }
     }
 }

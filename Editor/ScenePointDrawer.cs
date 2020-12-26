@@ -17,7 +17,7 @@ namespace Abrusle.ExtraAtributes.Editor
         {
             Vector3 pt = PropertyValue;
 
-            if (attribute.space == Space.Self)
+            if (attribute.Space == Space.Self)
             {
                 pt = mono.transform.TransformPoint(pt);
             }
